@@ -27,8 +27,7 @@ app.use(cors())
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 // Serve built React frontend static files
-app.use(express.static(path.join(__dirname, '../dist')))
-app.use(express.static(path.join(__dirname, '../frontend/dist')))
+
 
 // API Endpoints
 app.use('/api/user', userRouter)
@@ -48,13 +47,13 @@ app.get('/api/health', (req, res) => {
   })
 })
 
-// SPA catch-all: serve index.html for any non-API route (required for React Router)
-app.get('/{*path}', (req, res) => {
-  const rootDistFile = path.join(__dirname, '../dist/index.html')
-  const subDistFile = path.join(__dirname, '../frontend/dist/index.html')
-  const indexFile = fs.existsSync(rootDistFile) ? rootDistFile : subDistFile
-  res.sendFile(indexFile)
-})
+// Root Route
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "Forever Backend API is running 🚀"
+  });
+});
 
 app.listen(port, () => console.log('🚀 Forever Server running on PORT : ' + port))
 
