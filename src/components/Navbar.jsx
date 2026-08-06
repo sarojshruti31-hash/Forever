@@ -7,7 +7,12 @@ const Navbar = () => {
 
   const [visible, setVisible] = useState(false);
 
-  const { setShowSearch, getCartCount } = useContext(ShopContext);
+  const { setShowSearch, getCartCount, token, setToken, navigate } = useContext(ShopContext);
+
+  const logout = () => {
+    setToken('')
+    navigate('/login')
+  }
 
   return (
     <div className="relative">
@@ -66,20 +71,20 @@ const Navbar = () => {
 
           {/* Profile Dropdown */}
           <div className="group relative">
-            <Link to='/login'><img
-              src={assets.profile_icon}
-              className="w-5 cursor-pointer"
-              alt="profile"
-            /></Link>
-            
+            {token
+              ? <img src={assets.profile_icon} className="w-5 cursor-pointer" alt="profile" />
+              : <Link to='/login'><img src={assets.profile_icon} className="w-5 cursor-pointer" alt="profile" /></Link>
+            }
 
-            <div className="absolute right-0 pt-4 hidden group-hover:block">
-              <div className="flex flex-col gap-2 w-36 py-5 bg-slate-100 text-gray-500 rounded shadow">
-                <p className="cursor-pointer hover:text-black">My Profile</p>
-                <p className="cursor-pointer hover:text-black">Orders</p>
-                <p className="cursor-pointer hover:text-black">Logout</p>
+            {token && (
+              <div className="absolute right-0 pt-4 hidden group-hover:block">
+                <div className="flex flex-col gap-2 w-36 py-5 bg-slate-100 text-gray-500 rounded shadow">
+                  <p onClick={() => navigate('/orders')} className="cursor-pointer hover:text-black">My Profile</p>
+                  <p onClick={() => navigate('/orders')} className="cursor-pointer hover:text-black">Orders</p>
+                  <p onClick={logout} className="cursor-pointer hover:text-black">Logout</p>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Cart */}

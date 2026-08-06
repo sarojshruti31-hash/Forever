@@ -6,6 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "start": "npm run build && cd backend && npm start",
+    "postinstall": "cd backend && npm install",
+    "server": "cd backend && npm start",
+    "backend:dev": "cd backend && npm run dev",
     "lint": "eslint .",
     "preview": "vite preview"
   },
