@@ -16,21 +16,19 @@ import adminAuth from '../middleware/adminAuth.js'
 
 const orderRouter = express.Router()
 
-// ================= ADMIN ROUTES =================
+// Admin
 orderRouter.get('/list', adminAuth, allOrders)
 orderRouter.post('/status', adminAuth, updateStatus)
 
-// ================= USER ROUTES =================
+// User
 orderRouter.post('/place', authUser, placeOrder)
 orderRouter.post('/stripe', authUser, placeOrderStripe)
 orderRouter.post('/razorpay', authUser, placeOrderRazorpay)
-
 orderRouter.post('/verifyStripe', authUser, verifyStripe)
 orderRouter.post('/verifyRazorpay', authUser, verifyRazorpay)
-
 orderRouter.post('/userorders', authUser, userOrders)
 
-// ⭐ NEW TRACK ORDER ROUTE ⭐
+// ⭐ Add this line
 orderRouter.get('/:id', authUser, getOrderById)
 
 export default orderRouter
